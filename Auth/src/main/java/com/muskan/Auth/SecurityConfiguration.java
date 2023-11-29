@@ -44,6 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
         auth.jdbcAuthentication()
             .dataSource(dataSource)
+
             // .withDefaultSchema()
             // .withUser(
             //     User.withUsername("user")
@@ -55,6 +56,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
             //         .password("pass")
             //         .roles("ADMIN")
             // )
+            .usersByUsernameQuery("select username,password,enabled "
+                                        + "from users " 
+                                        + "where username = ?"          
+            ) 
+            .authoritiesByUsernameQuery("select username,authority" 
+                                + "from authorities"
+                                + "where username = ?"
+                                )
         ;
     }
 

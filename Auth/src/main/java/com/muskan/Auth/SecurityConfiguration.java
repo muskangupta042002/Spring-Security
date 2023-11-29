@@ -43,8 +43,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
+        //goes from most restricted to least restricted
         http.authorizeRequests()
-                        .antMatchers("/**").hasRole("USER")
+                        .antMatchers("/admin").hasRole("ADMIN")
+                        .antMatchers("/user").hasAnyRole("USER","ADMIN")
+                        .antMatchers("/").permitAll()
                         .and().formLogin();
     }
 }
